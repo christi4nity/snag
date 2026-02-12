@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="assets/logo.svg" width="128" height="128" alt="Snag logo">
+  <img src="assets/logo.svg?v=2" width="128" height="128" alt="Snag logo">
 </p>
 
 <h1 align="center">Snag</h1>

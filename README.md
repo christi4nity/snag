@@ -1,0 +1,53 @@
+<p align="center">
+  <img src="assets/logo.svg" width="128" height="128" alt="Snag logo">
+</p>
+
+<h1 align="center">Snag</h1>
+
+<p align="center">
+  Copy on select for macOS. Select text anywhere and it's instantly on your clipboard.
+</p>
+
+<p align="center">
+  <a href="#install">Install</a> · <a href="#how-it-works">How it works</a> · <a href="#usage">Usage</a>
+</p>
+
+---
+
+## Install
+
+### Homebrew
+
+```bash
+brew tap cv087/snag
+brew install snag
+open $(brew --prefix)/Cellar/snag/1.0.0/Snag.app
+```
+
+### From source
+
+```bash
+git clone https://github.com/cv087/snag.git
+cd snag
+make build
+open Snag.app
+```
+
+Requires Xcode Command Line Tools and macOS 13 (Ventura) or later.
+
+## How it works
+
+Snag monitors mouse events system-wide. When you click-drag to select text and release, it fires a `Cmd+C` keystroke after a brief delay. That's it.
+
+On first launch, macOS will ask you to grant Accessibility permission. Snag needs this to detect selections and simulate the copy keystroke.
+
+## Usage
+
+- **Left-click** the scissors icon in the menu bar to toggle on/off
+- **Right-click** for the menu: Enable/Disable, Launch at Login, Quit
+
+When enabled, any text you select by dragging is automatically copied to your clipboard.
+
+## License
+
+[MIT](LICENSE)

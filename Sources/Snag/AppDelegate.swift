@@ -49,9 +49,6 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
             eventMonitor?.start()
         }
 
-        if !EventMonitor.hasAccessibilityPermission() {
-            showAccessibilityAlert()
-        }
     }
 
     @objc private func toggleEnabled() {
@@ -119,23 +116,6 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
         }
     }
 
-    private func showAccessibilityAlert() {
-        let alert = NSAlert()
-        alert.messageText = "Accessibility Permission Required"
-        alert.informativeText = """
-            Snag needs Accessibility access to detect text selection and copy to clipboard.
-
-            Go to System Settings > Privacy & Security > Accessibility and enable Snag.
-            """
-        alert.alertStyle = .warning
-        alert.addButton(withTitle: "Open System Settings")
-        alert.addButton(withTitle: "Later")
-
-        if alert.runModal() == .alertFirstButtonReturn {
-            let url = URL(string: "x-apple.systempreferences:com.apple.preference.security?Privacy_Accessibility")!
-            NSWorkspace.shared.open(url)
-        }
-    }
 }
 
 extension UserDefaults {

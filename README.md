@@ -19,7 +19,7 @@
 ### Homebrew
 
 ```bash
-brew tap cv087/snag
+brew tap christi4nity/snag
 brew install snag
 open $(brew --prefix)/Cellar/snag/1.0.0/Snag.app
 ```
@@ -27,7 +27,7 @@ open $(brew --prefix)/Cellar/snag/1.0.0/Snag.app
 ### From source
 
 ```bash
-git clone https://github.com/cv087/snag.git
+git clone https://github.com/christi4nity/snag.git
 cd snag
 make build
 open Snag.app

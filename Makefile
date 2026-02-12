@@ -1,16 +1,21 @@
-PREFIX ?= /usr/local
+APP_NAME = Snag.app
+APP_DIR = $(APP_NAME)/Contents
+PREFIX ?= /Applications
 
 build:
 	swift build -c release
+	mkdir -p $(APP_DIR)/MacOS
+	cp .build/release/Snag $(APP_DIR)/MacOS/Snag
+	cp Sources/Snag/Info.plist $(APP_DIR)/Info.plist
 
 install: build
-	install -d $(PREFIX)/bin
-	install .build/release/Snag $(PREFIX)/bin/snag
+	cp -r $(APP_NAME) $(PREFIX)/$(APP_NAME)
 
 uninstall:
-	rm -f $(PREFIX)/bin/snag
+	rm -rf $(PREFIX)/$(APP_NAME)
 
 clean:
 	swift package clean
+	rm -rf $(APP_NAME)
 
 .PHONY: build install uninstall clean

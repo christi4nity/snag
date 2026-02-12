@@ -10,19 +10,26 @@ class Snag < Formula
 
   def install
     system "swift", "build", "-c", "release", "--disable-sandbox"
-    bin.install ".build/release/Snag" => "snag"
+    mkdir_p "Snag.app/Contents/MacOS"
+    cp ".build/release/Snag", "Snag.app/Contents/MacOS/Snag"
+    cp "Sources/Snag/Info.plist", "Snag.app/Contents/Info.plist"
+    prefix.install "Snag.app"
   end
 
   def caveats
     <<~EOS
-      Snag requires Accessibility permission to work.
-      On first launch, go to:
-        System Settings > Privacy & Security > Accessibility
-      and enable Snag.
+      Snag has been installed to:
+        #{prefix}/Snag.app
+
+      To use it:
+        open #{prefix}/Snag.app
+
+      You can also drag it to /Applications or add it to Login Items.
+      Snag requires Accessibility permission — grant it when prompted.
     EOS
   end
 
   test do
-    assert_predicate bin/"snag", :executable?
+    assert_predicate prefix/"Snag.app/Contents/MacOS/Snag", :executable?
   end
 end

@@ -21,7 +21,7 @@
 ```bash
 brew tap christi4nity/snag
 brew install snag
-open $(brew --prefix)/Cellar/snag/1.0.0/Snag.app
+open $(brew --prefix)/opt/snag/Snag.app
 ```
 
 ### From source
@@ -37,7 +37,7 @@ Requires Xcode Command Line Tools and macOS 13 (Ventura) or later.
 
 ## How it works
 
-Snag monitors mouse events system-wide. When you click-drag to select text and release, it fires a `Cmd+C` keystroke after a brief delay. That's it.
+Snag monitors mouse events system-wide. When you select text — by dragging, double-clicking (word), or triple-clicking (line) — it fires a `Cmd+C` keystroke after a brief delay. That's it.
 
 On first launch, macOS will ask you to grant Accessibility permission. Snag needs this to detect selections and simulate the copy keystroke.
 
@@ -46,7 +46,7 @@ On first launch, macOS will ask you to grant Accessibility permission. Snag need
 - **Left-click** the scissors icon in the menu bar to toggle on/off
 - **Right-click** for the menu: Enable/Disable, Launch at Login, Quit
 
-When enabled, any text you select by dragging is automatically copied to your clipboard.
+When enabled, any text you select — by dragging, double-clicking, or triple-clicking — is automatically copied to your clipboard.
 
 ## License
 

@@ -47,8 +47,17 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
 
         if isEnabled {
             eventMonitor?.start()
+            pollForAccessibility()
         }
 
+    }
+
+    private func pollForAccessibility() {
+        guard eventMonitor?.isRunning == false, isEnabled else { return }
+        DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) { [weak self] in
+            self?.eventMonitor?.start()
+            self?.pollForAccessibility()
+        }
     }
 
     @objc private func toggleEnabled() {

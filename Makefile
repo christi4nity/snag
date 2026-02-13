@@ -7,6 +7,8 @@ build:
 	mkdir -p $(APP_DIR)/MacOS
 	cp .build/release/Snag $(APP_DIR)/MacOS/Snag
 	cp Sources/Snag/Info.plist $(APP_DIR)/Info.plist
+	mkdir -p $(APP_DIR)/Resources
+	cp Sources/Snag/Resources/AppIcon.icns $(APP_DIR)/Resources/AppIcon.icns
 
 install: build
 	cp -r $(APP_NAME) $(PREFIX)/$(APP_NAME)

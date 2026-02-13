@@ -6,18 +6,22 @@ final class EventMonitor {
     private var eventTap: CFMachPort?
     private var runLoopSource: CFRunLoopSource?
     private var isDragging = false
-    private var lastClickTime: TimeInterval = 0
-    private var clickCount = 0
-    private let multiClickInterval: TimeInterval = 0.5
+    private var lastClickCount: Int64 = 0
+    var isRunning: Bool { eventTap != nil }
 
-    static func hasAccessibilityPermission() -> Bool {
+    static func requestAccessibilityPermission() -> Bool {
         AXIsProcessTrustedWithOptions(
-            [kAXTrustedCheckOptionPrompt.takeUnretainedValue(): false] as CFDictionary
+            [kAXTrustedCheckOptionPrompt.takeUnretainedValue(): true] as CFDictionary
         )
     }
 
     func start() {
         guard eventTap == nil else { return }
+
+        if !Self.requestAccessibilityPermission() {
+            NSLog("[Snag] Accessibility permission not granted")
+            return
+        }
 
         let eventMask: CGEventMask =
             (1 << CGEventType.leftMouseDown.rawValue) |
@@ -32,9 +36,11 @@ final class EventMonitor {
             callback: eventCallback,
             userInfo: Unmanaged.passUnretained(self).toOpaque()
         ) else {
+            NSLog("[Snag] Failed to create event tap")
             return
         }
 
+        NSLog("[Snag] Event tap created successfully")
         eventTap = tap
         runLoopSource = CFMachPortCreateRunLoopSource(kCFAllocatorDefault, tap, 0)
         CFRunLoopAddSource(CFRunLoopGetCurrent(), runLoopSource, .commonModes)
@@ -51,28 +57,23 @@ final class EventMonitor {
         eventTap = nil
         runLoopSource = nil
         isDragging = false
-        clickCount = 0
+        lastClickCount = 0
     }
 
     fileprivate func handleEvent(type: CGEventType, event: CGEvent) -> Unmanaged<CGEvent>? {
         switch type {
         case .leftMouseDown:
-            let now = ProcessInfo.processInfo.systemUptime
-            if now - lastClickTime < multiClickInterval {
-                clickCount += 1
-            } else {
-                clickCount = 1
-            }
-            lastClickTime = now
+            lastClickCount = event.getIntegerValueField(.mouseEventClickState)
 
         case .leftMouseDragged:
             isDragging = true
 
         case .leftMouseUp:
-            let isMultiClick = clickCount >= 2
+            let clickState = event.getIntegerValueField(.mouseEventClickState)
+            let isMultiClick = clickState >= 2 || lastClickCount >= 2
             if isDragging || isMultiClick {
                 isDragging = false
-                clickCount = 0
+                lastClickCount = 0
                 DispatchQueue.main.asyncAfter(deadline: .now() + 0.05) {
                     self.simulateCopy()
                 }

@@ -44,6 +44,7 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
         statusItem.button?.sendAction(on: [.leftMouseUp, .rightMouseUp])
 
         eventMonitor = EventMonitor()
+        EventMonitor.checkAccessibility(prompt: true)
 
         if isEnabled {
             eventMonitor?.start()

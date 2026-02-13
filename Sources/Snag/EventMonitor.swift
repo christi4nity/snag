@@ -9,17 +9,17 @@ final class EventMonitor {
     private var lastClickCount: Int64 = 0
     var isRunning: Bool { eventTap != nil }
 
-    static func requestAccessibilityPermission() -> Bool {
+    @discardableResult
+    static func checkAccessibility(prompt: Bool = false) -> Bool {
         AXIsProcessTrustedWithOptions(
-            [kAXTrustedCheckOptionPrompt.takeUnretainedValue(): true] as CFDictionary
+            [kAXTrustedCheckOptionPrompt.takeUnretainedValue(): prompt] as CFDictionary
         )
     }
 
     func start() {
         guard eventTap == nil else { return }
 
-        if !Self.requestAccessibilityPermission() {
-            NSLog("[Snag] Accessibility permission not granted")
+        if !Self.checkAccessibility() {
             return
         }
 

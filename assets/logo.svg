@@ -1,16 +1,12 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128" fill="none">
   <rect width="128" height="128" rx="28" fill="#1a1a1a"/>
-  <!-- Cursor arrow selecting text -->
-  <g transform="translate(28, 24)">
-    <!-- Text lines being selected -->
-    <rect x="20" y="12" width="52" height="8" rx="2" fill="#444"/>
-    <rect x="20" y="28" width="52" height="8" rx="2" fill="#444"/>
-    <rect x="20" y="44" width="36" height="8" rx="2" fill="#444"/>
-    <!-- Selection highlight -->
-    <rect x="32" y="11" width="40" height="10" rx="2" fill="#5e9eff" opacity="0.5"/>
-    <rect x="20" y="27" width="52" height="10" rx="2" fill="#5e9eff" opacity="0.5"/>
-    <rect x="20" y="43" width="24" height="10" rx="2" fill="#5e9eff" opacity="0.5"/>
-    <!-- Cursor -->
-    <polygon points="8,8 8,42 16,34 24,46 28,44 20,32 28,28" fill="#f5f5f5"/>
+  <!-- Scissors -->
+  <g transform="translate(64, 64)" stroke="#f5f5f5" stroke-width="3.5" fill="none" stroke-linecap="round" stroke-linejoin="round">
+    <!-- Left blade -->
+    <circle cx="-18" cy="18" r="10"/>
+    <line x1="-11" y1="11" x2="20" y2="-20"/>
+    <!-- Right blade -->
+    <circle cx="18" cy="18" r="10"/>
+    <line x1="11" y1="11" x2="-20" y2="-20"/>
   </g>
 </svg>

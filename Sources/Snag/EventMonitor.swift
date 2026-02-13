@@ -6,6 +6,9 @@ final class EventMonitor {
     private var eventTap: CFMachPort?
     private var runLoopSource: CFRunLoopSource?
     private var isDragging = false
+    private var lastClickTime: TimeInterval = 0
+    private var clickCount = 0
+    private let multiClickInterval: TimeInterval = 0.5
 
     static func hasAccessibilityPermission() -> Bool {
         AXIsProcessTrustedWithOptions(
@@ -17,6 +20,7 @@ final class EventMonitor {
         guard eventTap == nil else { return }
 
         let eventMask: CGEventMask =
+            (1 << CGEventType.leftMouseDown.rawValue) |
             (1 << CGEventType.leftMouseDragged.rawValue) |
             (1 << CGEventType.leftMouseUp.rawValue)
 
@@ -47,16 +51,28 @@ final class EventMonitor {
         eventTap = nil
         runLoopSource = nil
         isDragging = false
+        clickCount = 0
     }
 
     fileprivate func handleEvent(type: CGEventType, event: CGEvent) -> Unmanaged<CGEvent>? {
         switch type {
+        case .leftMouseDown:
+            let now = ProcessInfo.processInfo.systemUptime
+            if now - lastClickTime < multiClickInterval {
+                clickCount += 1
+            } else {
+                clickCount = 1
+            }
+            lastClickTime = now
+
         case .leftMouseDragged:
             isDragging = true
 
         case .leftMouseUp:
-            if isDragging {
+            let isMultiClick = clickCount >= 2
+            if isDragging || isMultiClick {
                 isDragging = false
+                clickCount = 0
                 DispatchQueue.main.asyncAfter(deadline: .now() + 0.05) {
                     self.simulateCopy()
                 }

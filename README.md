@@ -19,10 +19,11 @@
 ### Homebrew
 
 ```bash
-brew tap christi4nity/snag
-brew install snag
+brew install christi4nity/snag/snag
 open $(brew --prefix)/opt/snag/Snag.app
 ```
+
+> **Note:** You must use the fully qualified `christi4nity/snag/snag` name. There is an unrelated, deprecated `snag` in homebrew-core that will be installed otherwise.
 
 ### From source
 

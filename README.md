@@ -49,6 +49,19 @@ On first launch, macOS will ask you to grant Accessibility permission. Snag need
 
 When enabled, any text you select — by dragging, double-clicking, or triple-clicking — is automatically copied to your clipboard.
 
+## Tip: Works great with a clipboard manager
+
+Snag copies selected text automatically, which feels great for most workflows.
+
+One common edge case: sometimes you select text because you want to replace it with something you already copied. In that moment, auto-copy overwrites your current clipboard.
+
+A clipboard manager (like Raycast Clipboard History) makes this seamless:
+
+- You can quickly recover the previous clipboard item
+- Replace text without losing what you meant to paste
+
+Snag works fine on its own — this just makes the experience smoother for power users.
+
 ## License
 
 [MIT](LICENSE)
